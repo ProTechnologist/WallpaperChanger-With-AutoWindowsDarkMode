@@ -15,7 +15,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Sorting" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Random</Value>
     </Setting>
     <Setting Name="Ratio" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -45,10 +45,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="AutoWallpaperChange" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="AutoThemeChange" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

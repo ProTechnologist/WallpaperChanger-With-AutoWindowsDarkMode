@@ -61,21 +61,40 @@ namespace WallpaperChanger
         {
             Task.Run(() =>
             {
-                wallpaperManager.ApplyNextWallpaper();
+                // applyNextWallpaper throws exception due to network problem when wallpaper can't be downloaded
+                // or when wallpaper can't be written to disk
+                // or WallHaven rate limit hits, so I'm adding 3 attempts  make sure that wallpaper changes at interval.
+                for (int i = 0; i < 3; i++)
+                {
+                    try
+                    {
+                        wallpaperManager.ApplyNextWallpaper();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        ex.LogException();
+                    }
+                }
             });
         }
 
         public void WallpaperSettingsChanged()
         {
-
-            wallpaperManager.ResetFilters();
-            wallpaperManager.UpdateWallpaperList();
-            StartWallpaperTimer();
+            Task.Run(() =>
+            {
+                wallpaperManager.ResetFilters();
+                wallpaperManager.UpdateWallpaperList();
+                StartWallpaperTimer();
+            });
         }
 
         public void WindowsThemeSettingsChanged()
         {
-            StartWindowThemeTimer();
+            Task.Run(() =>
+            {
+                StartWindowThemeTimer();
+            });
         }
 
         void StartWallpaperTimer()
@@ -163,7 +182,6 @@ namespace WallpaperChanger
 
         private void darkThemeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("Toggle window theme ...");
             new WindowsDarkThemeUtils().ToggleWindowAppTheme();
         }
 
@@ -171,12 +189,6 @@ namespace WallpaperChanger
         public List<WallpaperInfo> GetWallpaperObject()
         {
             return wallpaperManager.GetWallpapersObject();
-        }
-
-        private void frmMain_VisibleChanged(object sender, EventArgs e)
-        {
-            //base.OnVisibleChanged(e);
-            //this.Visible = false;
         }
     }
 }

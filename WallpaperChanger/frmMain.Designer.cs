@@ -125,7 +125,6 @@
             Text = "Wallpaper Changer with Dark Mode";
             WindowState = FormWindowState.Minimized;
             Load += MainForm_Load;
-            VisibleChanged += frmMain_VisibleChanged;
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
         }

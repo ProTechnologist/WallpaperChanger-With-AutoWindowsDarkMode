@@ -16,6 +16,15 @@
         {
             return int.Parse(value);
         }
+
+        public static void LogException(this Exception exception)
+        {
+            if (exception != null)
+            {
+                System.Diagnostics.EventLog.WriteEntry("WallpaperChanger", exception.StackTrace,
+                                       System.Diagnostics.EventLogEntryType.Error);
+            }
+        }
     }
 
 }

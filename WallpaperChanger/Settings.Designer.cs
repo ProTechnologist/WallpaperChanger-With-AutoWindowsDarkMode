@@ -73,7 +73,7 @@ namespace WallpaperChanger {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Random")]
         public string Sorting {
             get {
                 return ((string)(this["Sorting"]));
@@ -193,7 +193,7 @@ namespace WallpaperChanger {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AutoWallpaperChange {
             get {
                 return ((bool)(this["AutoWallpaperChange"]));
@@ -205,7 +205,7 @@ namespace WallpaperChanger {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AutoThemeChange {
             get {
                 return ((bool)(this["AutoThemeChange"]));

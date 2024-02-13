@@ -1,4 +1,6 @@
+using System;
 using System.Threading;
+using WallpaperChanger.Utils;
 
 namespace WallpaperChanger
 {
@@ -9,22 +11,30 @@ namespace WallpaperChanger
         [STAThread]
         static void Main()
         {
-
-            string appName = Application.ProductName;
-            bool createdNew;
-
-            mutex = new Mutex(true, appName, out createdNew);
-
-            if (!createdNew)
+            try
             {
-                MessageBox.Show("Application is already running.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                //app is already running! Exiting the application
-                return;
+                string appName = Application.ProductName;
+                bool createdNew;
+
+                mutex = new Mutex(true, appName, out createdNew);
+
+                if (!createdNew)
+                {
+                    MessageBox.Show("Application is already running.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    //app is already running! Exiting the application
+                    return;
+                }
+
+
+                ApplicationConfiguration.Initialize();
+                Application.Run(new frmMain());
             }
+            catch (Exception ex)
+            {
+                ex.LogException();
 
-
-            ApplicationConfiguration.Initialize();
-            Application.Run(new frmMain());
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
