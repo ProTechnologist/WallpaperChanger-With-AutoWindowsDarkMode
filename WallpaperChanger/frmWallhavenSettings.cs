@@ -87,20 +87,18 @@ namespace WallpaperChanger
             // saving changes
             Settings.Default.Save();
 
-            // notifying user about saved changes
-            MessageBox.Show("Settings have been saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             // refreshing wallpaper cache
             Task.Run(() =>
             {
-                //WallhavenAutoWallpaperChanger.UpdateWallpaperList();
-
                 frmMain form = ((frmMain)Application.OpenForms["frmMain"]);
                 if (form != null)
                 {
                     form.WallpaperSettingsChanged();
                 }
             });
+
+            // notifying user about saved changes
+            MessageBox.Show("Settings have been saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         void RestoreSettings()

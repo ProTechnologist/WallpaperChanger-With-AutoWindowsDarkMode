@@ -48,7 +48,6 @@ namespace WallpaperChanger.Utils
 
         public void ChangeScheduledWindowAppTheme()
         {
-
             #region validation
             if (!Settings.Default.LightModeStartsAt.IsNotEmpty() && !Settings.Default.DarkModeStartsAt.IsNotEmpty()) return;
             #endregion

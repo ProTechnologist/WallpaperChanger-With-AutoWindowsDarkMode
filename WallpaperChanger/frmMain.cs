@@ -73,6 +73,11 @@ namespace WallpaperChanger
             StartWallpaperTimer();
         }
 
+        public void WindowsThemeSettingsChanged()
+        {
+            StartWindowThemeTimer();
+        }
+
         void StartWallpaperTimer()
         {
             #region checking if auto wallpaper changer is enabled
@@ -146,6 +151,9 @@ namespace WallpaperChanger
             windowThemeTimer.Interval = 60 * 1000; // 60 seconds (in milliseconds)
             windowThemeTimer.Elapsed += (sender, e) => { windowDarkModeManager.ChangeScheduledWindowAppTheme(); };
             windowThemeTimer.Start();
+
+            // manually triggering change theme as timer will kick after first interval elapsed
+            windowDarkModeManager.ChangeScheduledWindowAppTheme();
         }
 
         private void lightThemeToolStripMenuItem_Click(object sender, EventArgs e)

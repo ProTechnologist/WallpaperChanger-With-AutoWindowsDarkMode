@@ -36,6 +36,17 @@
             Settings.Default.LightModeStartsAt = lightModeTime;
             Settings.Default.Save();
 
+            // refreshing theme timer
+            Task.Run(() =>
+            {
+                frmMain form = ((frmMain)Application.OpenForms["frmMain"]);
+                if (form != null)
+                {
+                    form.WindowsThemeSettingsChanged();
+                }
+            });
+
+            // notifying user about saved changes
             MessageBox.Show("Settings have been saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
