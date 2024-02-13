@@ -23,7 +23,6 @@ namespace WallpaperChanger
         {
             this.Hide();
 
-
             StartWallpaperTimer();
             StartWindowThemeTimer();
 

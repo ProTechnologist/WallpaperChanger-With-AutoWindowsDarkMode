@@ -29,11 +29,13 @@
 
         void SaveChanges()
         {
-            string darkModeTime = cbDarkHrs.Text + ":" + cbDarkMins.Text + " " + cbDarkSS.Text;
-            string lightModeTime = cbLightHrs.Text + ":" + cbLightMins.Text + " " + cbLightSS.Text;
+            string darkModeTime = cbDarkHrs.Text.Trim() + ":" + cbDarkMins.Text.Trim() + " " + cbDarkSS.Text.Trim();
+            string lightModeTime = cbLightHrs.Text.Trim() + ":" + cbLightMins.Text.Trim() + " " + cbLightSS.Text.Trim();
 
             Settings.Default.DarkModeStartsAt = darkModeTime;
             Settings.Default.LightModeStartsAt = lightModeTime;
+            Settings.Default.AutoThemeChange = cbActive.Checked;
+
             Settings.Default.Save();
 
             // refreshing theme timer

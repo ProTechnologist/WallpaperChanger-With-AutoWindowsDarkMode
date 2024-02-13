@@ -109,7 +109,7 @@ namespace WallpaperChanger {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hour")]
         public string ChangeInterval {
             get {
                 return ((string)(this["ChangeInterval"]));

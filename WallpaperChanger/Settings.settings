@@ -24,7 +24,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ChangeInterval" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Hour</Value>
     </Setting>
     <Setting Name="WallpaperHistory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

@@ -13,18 +13,14 @@ namespace WallpaperChanger
         {
             try
             {
-                string appName = Application.ProductName;
                 bool createdNew;
-
-                mutex = new Mutex(true, appName, out createdNew);
+                mutex = new Mutex(true, Application.ProductName, out createdNew);
 
                 if (!createdNew)
                 {
                     MessageBox.Show("Application is already running.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    //app is already running! Exiting the application
                     return;
                 }
-
 
                 ApplicationConfiguration.Initialize();
                 Application.Run(new frmMain());
@@ -32,7 +28,6 @@ namespace WallpaperChanger
             catch (Exception ex)
             {
                 ex.LogException();
-
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

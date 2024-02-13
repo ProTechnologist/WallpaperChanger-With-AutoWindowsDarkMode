@@ -82,7 +82,12 @@ namespace WallpaperChanger
             Settings.Default.Sorting = cbSorting.Text;
             Settings.Default.Ratio = cbRatio.Text;
             Settings.Default.Purity = cbPurity.Text;
+            
+            // change interval
             Settings.Default.ChangeInterval = cbChangeInterval.Text;
+            Settings.Default.AutoWallpaperChange = cbActive.Checked;
+
+
 
             // saving changes
             Settings.Default.Save();
