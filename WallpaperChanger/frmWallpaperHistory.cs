@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using WallpaperChanger.Utils;
 
 namespace WallpaperChanger
 {
@@ -36,6 +37,12 @@ namespace WallpaperChanger
 
         void LoadPreviousWallpapers()
         {
+            #region validation
+
+            if (!Settings.Default.WallpaperHistory.IsNotEmpty()) return;
+
+            #endregion
+
             Task.Run(() =>
             {
                 List<string> IDs = Settings.Default.WallpaperHistory.Split(',').ToList();
