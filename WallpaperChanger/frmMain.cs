@@ -103,7 +103,7 @@ namespace WallpaperChanger
             if (!Settings.Default.AutoWallpaperChange)
             {
                 #region disable timer if already running
-                if (wallpaperTimer.Enabled)
+                if (wallpaperTimer != null && wallpaperTimer.Enabled)
                 {
                     wallpaperTimer.Stop();
                     wallpaperTimer.Enabled = false;
@@ -154,7 +154,7 @@ namespace WallpaperChanger
             if (!Settings.Default.AutoThemeChange)
             {
                 #region disable timer if already running
-                if (windowThemeTimer.Enabled)
+                if (windowThemeTimer != null && windowThemeTimer.Enabled)
                 {
                     windowThemeTimer.Stop();
                     windowThemeTimer.Enabled = false;
