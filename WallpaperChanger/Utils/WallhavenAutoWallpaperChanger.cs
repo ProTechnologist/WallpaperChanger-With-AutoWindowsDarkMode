@@ -54,6 +54,9 @@ namespace WallpaperChanger.Utils
             Settings.Default.MaxPageNo = 0;
             Settings.Default.Seed = string.Empty;
             Settings.Default.Save();
+
+            //reset current set of cached wallpapers
+            Wallpapers.Clear();
         }
 
         public void UpdateWallpaperList()
