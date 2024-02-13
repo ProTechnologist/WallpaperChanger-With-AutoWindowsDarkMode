@@ -125,16 +125,24 @@ namespace WallpaperChanger.Utils
 
         public void ApplyNextWallpaper()
         {
-            if (Wallpapers.Count < 4)
+            if (Wallpapers.Count == 0)
             {
                 UpdateWallpaperList();
             }
 
-            WallpaperInfo next_wallpaper = ComputeRandomWallpaperURL();
+            // i guess, noo point in randomizing unknown wallpapers but keeping the functionality
+            //WallpaperInfo next_wallpaper = ComputeRandomWallpaperURL();
+
+            // now intead, going for sequential list of wallpapers
+            WallpaperInfo next_wallpaper = Wallpapers.FirstOrDefault();
+
+            // remove selected wallpaper from current wallpaper collection
+            // this will avoid re-appling this same wallpaper again
+            Wallpapers.Remove(next_wallpaper);
 
             #region validation
 
-            if(next_wallpaper == null) return;
+            if (next_wallpaper == null) return;
 
             #endregion
 
@@ -157,10 +165,6 @@ namespace WallpaperChanger.Utils
             }
 
             #endregion
-
-            // remove selected wallpaper from current wallpaper collection
-            // this will avoid re-appling this same wallpaper again
-            Wallpapers.Remove(next_wallpaper);
 
             // download wallpaper
             string wallpaper_name = DownloadWallpaper(next_wallpaper);
