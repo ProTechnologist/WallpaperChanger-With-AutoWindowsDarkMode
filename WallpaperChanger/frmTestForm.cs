@@ -4,9 +4,12 @@ namespace WallpaperChanger
 {
     public partial class frmTestForm : Form
     {
+        private DarkModeCS DM = null;
+
         public frmTestForm()
         {
             InitializeComponent();
+            DM = new DarkModeCS(this);
         }
 
         private async void button1_Click(object sender, EventArgs e)

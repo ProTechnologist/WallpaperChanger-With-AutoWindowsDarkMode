@@ -5,6 +5,8 @@ namespace WallpaperChanger
 {
     public partial class frmMain : Form
     {
+        private DarkModeCS DM = null;
+
         WallhavenAutoWallpaperChanger wallpaperManager = new WallhavenAutoWallpaperChanger();
         WindowsDarkThemeUtils windowDarkModeManager = new WindowsDarkThemeUtils();
 
@@ -14,6 +16,7 @@ namespace WallpaperChanger
         public frmMain()
         {
             InitializeComponent();
+            DM = new DarkModeCS(this);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -26,6 +29,7 @@ namespace WallpaperChanger
 
             // uncomment following line of code only for debugging purposes
             //new frmDebugForm().Show();
+            //new frmTestForm().Show();
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -164,7 +168,7 @@ namespace WallpaperChanger
         private void frmMain_VisibleChanged(object sender, EventArgs e)
         {
             //base.OnVisibleChanged(e);
-            this.Visible = false;
+            //this.Visible = false;
         }
     }
 }

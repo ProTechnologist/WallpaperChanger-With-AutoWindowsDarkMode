@@ -2,9 +2,12 @@
 {
     public partial class frmDebugForm : Form
     {
+        private DarkModeCS DM = null;
+
         public frmDebugForm()
         {
             InitializeComponent();
+            DM = new DarkModeCS(this);
         }
 
         private void frmDebugForm_Load(object sender, EventArgs e)

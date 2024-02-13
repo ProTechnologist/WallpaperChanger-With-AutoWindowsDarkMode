@@ -90,7 +90,7 @@
             btnNext.Name = "btnNext";
             btnNext.Size = new Size(205, 36);
             btnNext.TabIndex = 2;
-            btnNext.Text = "Next Wallapper";
+            btnNext.Text = "Next Wallpaper";
             btnNext.UseVisualStyleBackColor = true;
             btnNext.Click += btnNext_Click;
             // 

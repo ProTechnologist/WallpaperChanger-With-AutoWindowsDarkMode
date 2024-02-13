@@ -48,6 +48,11 @@ namespace WallpaperChanger.Utils
 
         public void ChangeScheduledWindowAppTheme()
         {
+
+            #region validation
+            if (!Settings.Default.LightModeStartsAt.IsNotEmpty() && !Settings.Default.DarkModeStartsAt.IsNotEmpty()) return;
+            #endregion
+
             string current = DateTime.Now.ToString("hh:mm tt");
 
             DateTime darkThemeStart = DateTime.ParseExact(Settings.Default.DarkModeStartsAt, "h:mm tt", CultureInfo.InvariantCulture);

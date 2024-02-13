@@ -15,7 +15,7 @@ namespace WallpaperChanger.Utils
             string URL = "https://wallhaven.cc/api/v1/search";
 
             // keywords
-            if (Settings.Default.Keywords.IsNotEmpty()) URL += "?q=" + Settings.Default.Keywords;
+            URL += "?q=" + Settings.Default.Keywords;
 
             // compute categories string
             string categories = ""; // format 000 (general/anime/people)
@@ -131,6 +131,13 @@ namespace WallpaperChanger.Utils
             }
 
             WallpaperInfo next_wallpaper = ComputeRandomWallpaperURL();
+
+            #region validation
+
+            if(next_wallpaper == null) return;
+
+            #endregion
+
             string temp_wallpaper_name = Path.GetFileName(next_wallpaper.URL);
 
             // validation - null/empty check
