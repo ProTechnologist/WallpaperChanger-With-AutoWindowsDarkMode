@@ -13,7 +13,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="VirtualDesktop11\VirtualDesktop11.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="WallpaperChanger.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="VirtualDesktop11\VirtualDesktop11.exe" />
   </ItemGroup>
 
   <ItemGroup>

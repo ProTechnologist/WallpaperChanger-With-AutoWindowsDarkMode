@@ -1,0 +1,7 @@
+﻿This exe is taken as-is from following github project so that the wallpaper can be applied to all of available virtual desktops.
+
+https://github.com/MScholtes/VirtualDesktop
+
+Tag: VirtualDesktop 1.17
+File name: VirtualDesktop11.exe
+

@@ -51,11 +51,6 @@ namespace WallpaperChanger
             new frmWindowsDarkMode().Show();
         }
 
-        private void nextWallpaperToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            applyNextWallpaper();
-        }
-
         public void applyNextWallpaper()
         {
             Task.Run(() =>
@@ -98,80 +93,86 @@ namespace WallpaperChanger
 
         void StartWallpaperTimer()
         {
-            #region checking if auto wallpaper changer is enabled
-            if (!Settings.Default.AutoWallpaperChange)
+            Task.Run(() =>
             {
-                #region disable timer if already running
-                if (wallpaperTimer != null && wallpaperTimer.Enabled)
+                #region checking if auto wallpaper changer is enabled
+                if (!Settings.Default.AutoWallpaperChange)
+                {
+                    #region disable timer if already running
+                    if (wallpaperTimer != null && wallpaperTimer.Enabled)
+                    {
+                        wallpaperTimer.Stop();
+                        wallpaperTimer.Enabled = false;
+                        wallpaperTimer.Dispose();
+                    }
+                    #endregion
+
+                    return;
+                }
+                #endregion
+
+                if (wallpaperTimer != null)
                 {
                     wallpaperTimer.Stop();
                     wallpaperTimer.Enabled = false;
                     wallpaperTimer.Dispose();
                 }
+
+                wallpaperTimer = new System.Timers.Timer();
+
+                int minutes = 0;
+
+                if (Settings.Default.ChangeInterval.ToLower() == "minute") minutes = 1;
+                if (Settings.Default.ChangeInterval.ToLower() == "5 minutes") minutes = 5;
+                if (Settings.Default.ChangeInterval.ToLower() == "10 minutes") minutes = 10;
+                if (Settings.Default.ChangeInterval.ToLower() == "15 minutes") minutes = 15;
+                if (Settings.Default.ChangeInterval.ToLower() == "30 minutes") minutes = 30;
+                if (Settings.Default.ChangeInterval.ToLower() == "hour") minutes = 60;
+                if (Settings.Default.ChangeInterval.ToLower() == "6 hours") minutes = 360;
+
+                #region validation
+
+                if (minutes == 0) return;
+
                 #endregion
 
-                return;
-            }
-            #endregion
+                wallpaperTimer.Interval = minutes * 60 * 1000; // minutes * seconds * 1000 will give milliseconds
+                wallpaperTimer.Elapsed += (sender, e) => { applyNextWallpaper(); };
+                wallpaperTimer.Start();
 
-            if (wallpaperTimer != null)
-            {
-                wallpaperTimer.Stop();
-                wallpaperTimer.Enabled = false;
-                wallpaperTimer.Dispose();
-            }
-
-            wallpaperTimer = new System.Timers.Timer();
-
-            int minutes = 0;
-
-            if (Settings.Default.ChangeInterval.ToLower() == "minute") minutes = 1;
-            if (Settings.Default.ChangeInterval.ToLower() == "5 minutes") minutes = 5;
-            if (Settings.Default.ChangeInterval.ToLower() == "10 minutes") minutes = 10;
-            if (Settings.Default.ChangeInterval.ToLower() == "15 minutes") minutes = 15;
-            if (Settings.Default.ChangeInterval.ToLower() == "30 minutes") minutes = 30;
-            if (Settings.Default.ChangeInterval.ToLower() == "hour") minutes = 60;
-            if (Settings.Default.ChangeInterval.ToLower() == "6 hours") minutes = 360;
-
-            #region validation
-
-            if (minutes == 0) return;
-
-            #endregion
-
-            wallpaperTimer.Interval = minutes * 60 * 1000; // minutes * seconds * 1000 will give milliseconds
-            wallpaperTimer.Elapsed += (sender, e) => { applyNextWallpaper(); };
-            wallpaperTimer.Start();
-
-            // manually triggering change wallpaper as timer will kick after first interval elapsed
-            applyNextWallpaper();
+                // manually triggering change wallpaper as timer will kick after first interval elapsed
+                applyNextWallpaper();
+            });
         }
 
         void StartWindowThemeTimer()
         {
-            #region checking if window auto theme changer is enabled
-            if (!Settings.Default.AutoThemeChange)
+            Task.Run(() =>
             {
-                #region disable timer if already running
-                if (windowThemeTimer != null && windowThemeTimer.Enabled)
+                #region checking if window auto theme changer is enabled
+                if (!Settings.Default.AutoThemeChange)
                 {
-                    windowThemeTimer.Stop();
-                    windowThemeTimer.Enabled = false;
-                    windowThemeTimer.Dispose();
+                    #region disable timer if already running
+                    if (windowThemeTimer != null && windowThemeTimer.Enabled)
+                    {
+                        windowThemeTimer.Stop();
+                        windowThemeTimer.Enabled = false;
+                        windowThemeTimer.Dispose();
+                    }
+                    #endregion
+
+                    return;
                 }
                 #endregion
 
-                return;
-            }
-            #endregion
+                windowThemeTimer = new System.Timers.Timer();
+                windowThemeTimer.Interval = 60 * 1000; // 60 seconds (in milliseconds)
+                windowThemeTimer.Elapsed += (sender, e) => { windowDarkModeManager.ChangeScheduledWindowAppTheme(); };
+                windowThemeTimer.Start();
 
-            windowThemeTimer = new System.Timers.Timer();
-            windowThemeTimer.Interval = 60 * 1000; // 60 seconds (in milliseconds)
-            windowThemeTimer.Elapsed += (sender, e) => { windowDarkModeManager.ChangeScheduledWindowAppTheme(); };
-            windowThemeTimer.Start();
-
-            // manually triggering change theme as timer will kick after first interval elapsed
-            windowDarkModeManager.ChangeScheduledWindowAppTheme();
+                // manually triggering change theme as timer will kick after first interval elapsed
+                windowDarkModeManager.ChangeScheduledWindowAppTheme();
+            });
         }
 
         private void lightThemeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -179,15 +180,18 @@ namespace WallpaperChanger
             new frmWallpaperHistory().Show();
         }
 
-        private void darkThemeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new WindowsDarkThemeUtils().ToggleWindowAppTheme();
-        }
-
         // following function is only for debugging for debug form
         public List<WallpaperInfo> GetWallpaperObject()
         {
             return wallpaperManager.GetWallpapersObject();
+        }
+
+        private void toggleWindowThemeMenuItem_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                windowDarkModeManager.ToggleWindowAppTheme();
+            });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace WallpaperChanger.Utils
 {
@@ -193,7 +194,30 @@ namespace WallpaperChanger.Utils
             #endregion
 
             // change wallpaper
-            WallpaperChangerUtil.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
+
+            // following line of code (approach) does change walllpaper but when we switch between virtual desktops
+            // it shows a solid background color for a moment, and then wallpaper appears up
+            // everything's fast but the overall experience is weird...
+            //WallpaperChangerUtil.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
+
+            // so instead, let's se external (and functional solution for it)
+
+            WallpaperChangerByExe.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
+
+            //foreach (var resourceName in arrResources)
+            //{
+            //    if (resourceName.ToUpper().EndsWith("VirtualDesktop11.exe".ToUpper()))
+            //    {
+            //        using (var resourceToSave = currentAssembly.GetManifestResourceStream(resourceName))
+            //        {
+            //            using (var output = File.OpenWrite(GetCurrentFolder()))
+            //            {
+            //                resourceToSave.CopyTo(output);
+            //            }
+            //            resourceToSave.Close();
+            //        }
+            //    }
+            //}
 
 
             #region add wallpaper to history

@@ -36,9 +36,8 @@
             wallpaperSettingsToolStripMenuItem = new ToolStripMenuItem();
             darkModeSettingsToolStripMenuItem = new ToolStripMenuItem();
             changeThemeToolStripMenuItem = new ToolStripMenuItem();
-            darkThemeToolStripMenuItem = new ToolStripMenuItem();
             lightThemeToolStripMenuItem = new ToolStripMenuItem();
-            nextWallpaperToolStripMenuItem = new ToolStripMenuItem();
+            toggleWindowThemeMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
@@ -53,15 +52,15 @@
             // 
             // contextMenuStrip1
             // 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { settingsToolStripMenuItem, changeThemeToolStripMenuItem, nextWallpaperToolStripMenuItem, toolStripMenuItem1 });
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { settingsToolStripMenuItem, changeThemeToolStripMenuItem, toggleWindowThemeMenuItem, toolStripMenuItem1 });
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(156, 92);
+            contextMenuStrip1.Size = new Size(196, 114);
             // 
             // settingsToolStripMenuItem
             // 
             settingsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { wallpaperSettingsToolStripMenuItem, darkModeSettingsToolStripMenuItem });
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            settingsToolStripMenuItem.Size = new Size(155, 22);
+            settingsToolStripMenuItem.Size = new Size(195, 22);
             settingsToolStripMenuItem.Text = "Settings";
             // 
             // wallpaperSettingsToolStripMenuItem
@@ -80,38 +79,30 @@
             // 
             // changeThemeToolStripMenuItem
             // 
-            changeThemeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { darkThemeToolStripMenuItem, lightThemeToolStripMenuItem });
+            changeThemeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { lightThemeToolStripMenuItem });
             changeThemeToolStripMenuItem.Name = "changeThemeToolStripMenuItem";
-            changeThemeToolStripMenuItem.Size = new Size(155, 22);
+            changeThemeToolStripMenuItem.Size = new Size(195, 22);
             changeThemeToolStripMenuItem.Text = "Tools";
-            // 
-            // darkThemeToolStripMenuItem
-            // 
-            darkThemeToolStripMenuItem.Name = "darkThemeToolStripMenuItem";
-            darkThemeToolStripMenuItem.Size = new Size(195, 22);
-            darkThemeToolStripMenuItem.Text = "Toggle Window Theme";
-            darkThemeToolStripMenuItem.Click += darkThemeToolStripMenuItem_Click;
             // 
             // lightThemeToolStripMenuItem
             // 
             lightThemeToolStripMenuItem.Name = "lightThemeToolStripMenuItem";
-            lightThemeToolStripMenuItem.Size = new Size(195, 22);
+            lightThemeToolStripMenuItem.Size = new Size(168, 22);
             lightThemeToolStripMenuItem.Text = "Wallpaper History";
             lightThemeToolStripMenuItem.Click += lightThemeToolStripMenuItem_Click;
             // 
-            // nextWallpaperToolStripMenuItem
+            // toggleWindowThemeMenuItem
             // 
-            nextWallpaperToolStripMenuItem.Image = Properties.Resources.next_wallpaper;
-            nextWallpaperToolStripMenuItem.Name = "nextWallpaperToolStripMenuItem";
-            nextWallpaperToolStripMenuItem.Size = new Size(155, 22);
-            nextWallpaperToolStripMenuItem.Text = "Next Wallpaper";
-            nextWallpaperToolStripMenuItem.Click += nextWallpaperToolStripMenuItem_Click;
+            toggleWindowThemeMenuItem.Name = "toggleWindowThemeMenuItem";
+            toggleWindowThemeMenuItem.Size = new Size(195, 22);
+            toggleWindowThemeMenuItem.Text = "Toggle Window Theme";
+            toggleWindowThemeMenuItem.Click += toggleWindowThemeMenuItem_Click;
             // 
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Image = Properties.Resources.close_app;
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(155, 22);
+            toolStripMenuItem1.Size = new Size(195, 22);
             toolStripMenuItem1.Text = "Exit";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
@@ -138,8 +129,7 @@
         private ToolStripMenuItem wallpaperSettingsToolStripMenuItem;
         private ToolStripMenuItem darkModeSettingsToolStripMenuItem;
         private ToolStripMenuItem changeThemeToolStripMenuItem;
-        private ToolStripMenuItem darkThemeToolStripMenuItem;
         private ToolStripMenuItem lightThemeToolStripMenuItem;
-        private ToolStripMenuItem nextWallpaperToolStripMenuItem;
+        private ToolStripMenuItem toggleWindowThemeMenuItem;
     }
 }
