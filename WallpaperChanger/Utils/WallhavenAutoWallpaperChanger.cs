@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace WallpaperChanger.Utils
 {
@@ -104,7 +105,12 @@ namespace WallpaperChanger.Utils
             return random_wallapper;
         }
 
-        static string DownloadWallpaper(WallpaperInfo wi)
+        string GetCurrentFolder()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
+
+        string DownloadWallpaper(WallpaperInfo wi)
         {
             #region validation
             if (wi == null) return string.Empty;
@@ -112,7 +118,7 @@ namespace WallpaperChanger.Utils
 
             if (wi != null && wi.Path.IsNotEmpty())
             {
-                string filename = AppDomain.CurrentDomain.BaseDirectory + "\\" + wi.Path.GetFileName();
+                string filename = GetCurrentFolder() + "\\" + wi.Path.GetFileName();
                 byte[] fileBytes = new HttpClient().GetByteArrayAsync(wi.Path).GetAwaiter().GetResult();
                 File.WriteAllBytes(filename, fileBytes);
                 File.WriteAllBytesAsync(filename, fileBytes).GetAwaiter().GetResult();
@@ -167,13 +173,28 @@ namespace WallpaperChanger.Utils
             #endregion
 
             // download wallpaper
-            string wallpaper_name = DownloadWallpaper(next_wallpaper);
+            string new_wallpaper = DownloadWallpaper(next_wallpaper);
+
+            #region wallpaper clean up (delete old wallpaper, rename current wallpaper and set as a wallpaper)
+
+            // delete old wallpaper (if found)
+            string[] old_wallpapers = Directory.GetFiles(GetCurrentFolder(), "wallpaper_*");
+            foreach (string old_wallpaper in old_wallpapers)
+            {
+                File.Delete(old_wallpaper);
+            }
+
+            // rename new/downloaded wallpaper
+            string new_wallpaper_name = $"wallpaper_{DateTime.Now.Ticks.ToString()}{Path.GetExtension(new_wallpaper)}";
+            new FileInfo(new_wallpaper).MoveTo(new_wallpaper_name);
+
+            new_wallpaper = new_wallpaper_name;
+
+            #endregion
 
             // change wallpaper
-            WallpaperChangerUtil.ChangeWallpaper(wallpaper_name);
+            WallpaperChangerUtil.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
 
-            // delete downloaded wallpaper
-            File.Delete(wallpaper_name);
 
             #region add wallpaper to history
             if (Settings.Default.WallpaperHistory.IsNotEmpty())
