@@ -76,7 +76,7 @@ namespace WallpaperChanger
 
             // loading up wallpaper boxes into othe UI
             flowLayoutPanel1.Controls.AddRange(boxes.ToArray());
-            groupBox1.Text = $"Previous Wallpapers ({ boxes.Count })";
+            groupBox1.Text = $"Previous Wallpapers ({boxes.Count})";
         }
     }
 }

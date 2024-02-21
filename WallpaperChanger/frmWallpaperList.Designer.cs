@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWallpaperList));
             flowLayoutPanel1 = new FlowLayoutPanel();
             btnNextPage = new Button();
             btnPrevPage = new Button();
@@ -38,8 +39,9 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Dock = DockStyle.Bottom;
+            flowLayoutPanel1.CausesValidation = false;
             flowLayoutPanel1.Location = new Point(0, 53);
             flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -113,6 +115,7 @@
             Controls.Add(btnNextPage);
             Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "frmWallpaperList";
             Text = "Wallpaper List";
