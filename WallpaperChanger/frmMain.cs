@@ -193,5 +193,10 @@ namespace WallpaperChanger
                 windowDarkModeManager.ToggleWindowAppTheme();
             });
         }
+
+        private void wallpaperListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new frmWallpaperList().Show();
+        }
     }
 }

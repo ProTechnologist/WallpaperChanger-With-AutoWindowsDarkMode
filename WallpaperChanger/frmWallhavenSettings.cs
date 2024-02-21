@@ -6,6 +6,7 @@ namespace WallpaperChanger
     public partial class frmWallhavenSettings : Form
     {
         private DarkModeCS DM = null;
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
         public frmWallhavenSettings()
         {
@@ -42,6 +43,8 @@ namespace WallpaperChanger
             cbGeneral.Checked = true;
             cbChangeInterval.SelectedIndex = 1;
 
+            txtApiKey.Text = string.Empty;
+
             txtKeywords.Text = "Nature";
         }
 
@@ -50,9 +53,6 @@ namespace WallpaperChanger
             setDefaultUIOptions();
             RestoreSettings();
 
-            // following code works
-            //string wallpaper_path = @"D:\_System_Folders\Pictures\wallhaven\wallhaven-v99ox3.png";
-            //ChangeWallpaper(wallpaper_path);
         }
 
         void OpenConfigWindow()
@@ -82,12 +82,13 @@ namespace WallpaperChanger
             Settings.Default.Sorting = cbSorting.Text;
             Settings.Default.Ratio = cbRatio.Text;
             Settings.Default.Purity = cbPurity.Text;
-            
+
             // change interval
             Settings.Default.ChangeInterval = cbChangeInterval.Text;
             Settings.Default.AutoWallpaperChange = cbActive.Checked;
 
-
+            // API key
+            Settings.Default.ApiKey = txtApiKey.Text;
 
             // saving changes
             Settings.Default.Save();
@@ -103,7 +104,7 @@ namespace WallpaperChanger
             });
 
             // notifying user about saved changes
-            MessageBox.Show("Settings have been saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("Settings have been saved", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         void RestoreSettings()
@@ -119,13 +120,39 @@ namespace WallpaperChanger
             cbChangeInterval.Text = Settings.Default.ChangeInterval;
 
             cbActive.Checked = Settings.Default.AutoWallpaperChange;
+
+            txtApiKey.Text = Settings.Default.ApiKey;
         }
 
         #endregion
 
         private void btnSaveChanges_Click(object sender, EventArgs e)
         {
+            #region configure timer
+
+            timer.Interval = 500;
+
+            timer.Tick += (sender, e) =>
+            {
+                btnSaveChanges.Text = "Saved Successfully";
+                Thread.Sleep(500);
+                btnSaveChanges.Text = "Save Changes";
+                btnSaveChanges.Enabled = true;
+            };
+
+            #endregion
+
+            btnSaveChanges.Enabled = false;
+            btnSaveChanges.Text = "Saving ...";
+
+            timer.Start();
+
             SaveChanges();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new frmWallpaperList().Show();
         }
     }
 }

@@ -48,11 +48,15 @@
             groupBox4 = new GroupBox();
             txtKeywords = new TextBox();
             btnSaveChanges = new Button();
+            groupBox5 = new GroupBox();
+            txtApiKey = new TextBox();
+            button2 = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox3.SuspendLayout();
             groupBox4.SuspendLayout();
+            groupBox5.SuspendLayout();
             SuspendLayout();
             // 
             // cbGeneral
@@ -135,7 +139,7 @@
             // 
             cbPurity.DropDownStyle = ComboBoxStyle.DropDownList;
             cbPurity.FormattingEnabled = true;
-            cbPurity.Items.AddRange(new object[] { "SFW", "Sketchy", "Both" });
+            cbPurity.Items.AddRange(new object[] { "SFW", "Sketchy", "Both", "NSFW Only" });
             cbPurity.Location = new Point(122, 94);
             cbPurity.Name = "cbPurity";
             cbPurity.Size = new Size(150, 28);
@@ -184,7 +188,7 @@
             groupBox3.Controls.Add(cbActive);
             groupBox3.Controls.Add(cbChangeInterval);
             groupBox3.Controls.Add(label4);
-            groupBox3.Location = new Point(12, 337);
+            groupBox3.Location = new Point(12, 402);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(278, 106);
             groupBox3.TabIndex = 10;
@@ -239,7 +243,7 @@
             // 
             // btnSaveChanges
             // 
-            btnSaveChanges.Location = new Point(65, 449);
+            btnSaveChanges.Location = new Point(12, 514);
             btnSaveChanges.Name = "btnSaveChanges";
             btnSaveChanges.Size = new Size(150, 38);
             btnSaveChanges.TabIndex = 12;
@@ -247,11 +251,40 @@
             btnSaveChanges.UseVisualStyleBackColor = true;
             btnSaveChanges.Click += btnSaveChanges_Click;
             // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(txtApiKey);
+            groupBox5.Location = new Point(12, 337);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(278, 59);
+            groupBox5.TabIndex = 12;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "API Key";
+            // 
+            // txtApiKey
+            // 
+            txtApiKey.Location = new Point(6, 26);
+            txtApiKey.Name = "txtApiKey";
+            txtApiKey.Size = new Size(266, 27);
+            txtApiKey.TabIndex = 0;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(211, 514);
+            button2.Name = "button2";
+            button2.Size = new Size(79, 38);
+            button2.TabIndex = 13;
+            button2.Text = "List";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
             // frmWallhavenSettings
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(302, 494);
+            ClientSize = new Size(302, 561);
+            Controls.Add(button2);
+            Controls.Add(groupBox5);
             Controls.Add(btnSaveChanges);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
@@ -277,6 +310,8 @@
             groupBox3.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -302,5 +337,8 @@
         private TextBox txtKeywords;
         private Button btnSaveChanges;
         private CheckBox cbActive;
+        private GroupBox groupBox5;
+        private TextBox txtApiKey;
+        private Button button2;
     }
 }

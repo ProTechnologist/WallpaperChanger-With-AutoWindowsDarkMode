@@ -59,7 +59,6 @@ namespace WallpaperChanger
                     picture_box.DoubleClick += (sender, e) =>
                     {
                         string url = (sender as PictureBox).Tag.ToString();
-                        //Process.Start(url);
 
                         Process.Start(new ProcessStartInfo()
                         {

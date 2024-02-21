@@ -39,6 +39,7 @@
             lightThemeToolStripMenuItem = new ToolStripMenuItem();
             toggleWindowThemeMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
+            wallpaperListToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,7 +80,7 @@
             // 
             // changeThemeToolStripMenuItem
             // 
-            changeThemeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { lightThemeToolStripMenuItem });
+            changeThemeToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { lightThemeToolStripMenuItem, wallpaperListToolStripMenuItem });
             changeThemeToolStripMenuItem.Name = "changeThemeToolStripMenuItem";
             changeThemeToolStripMenuItem.Size = new Size(195, 22);
             changeThemeToolStripMenuItem.Text = "Tools";
@@ -87,7 +88,7 @@
             // lightThemeToolStripMenuItem
             // 
             lightThemeToolStripMenuItem.Name = "lightThemeToolStripMenuItem";
-            lightThemeToolStripMenuItem.Size = new Size(168, 22);
+            lightThemeToolStripMenuItem.Size = new Size(180, 22);
             lightThemeToolStripMenuItem.Text = "Wallpaper History";
             lightThemeToolStripMenuItem.Click += lightThemeToolStripMenuItem_Click;
             // 
@@ -105,6 +106,13 @@
             toolStripMenuItem1.Size = new Size(195, 22);
             toolStripMenuItem1.Text = "Exit";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
+            // 
+            // wallpaperListToolStripMenuItem
+            // 
+            wallpaperListToolStripMenuItem.Name = "wallpaperListToolStripMenuItem";
+            wallpaperListToolStripMenuItem.Size = new Size(180, 22);
+            wallpaperListToolStripMenuItem.Text = "Wallpaper List";
+            wallpaperListToolStripMenuItem.Click += wallpaperListToolStripMenuItem_Click;
             // 
             // frmMain
             // 
@@ -131,5 +139,6 @@
         private ToolStripMenuItem changeThemeToolStripMenuItem;
         private ToolStripMenuItem lightThemeToolStripMenuItem;
         private ToolStripMenuItem toggleWindowThemeMenuItem;
+        private ToolStripMenuItem wallpaperListToolStripMenuItem;
     }
 }

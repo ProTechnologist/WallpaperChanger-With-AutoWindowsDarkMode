@@ -33,10 +33,12 @@ namespace WallpaperChanger.Utils
             if (Settings.Default.Ratio.IsNotEmpty()) URL += "&ratios=" + Settings.Default.Ratio;
 
             // compute purity string
-            string purity = ""; // format 000 (sfw/sketchy/nsfw) nsfw not avaiable without user app key, FYI.
+            string purity = "100"; // format 000 (sfw/sketchy/nsfw) nsfw not avaiable without user app key, FYI.
             if (Settings.Default.Purity.ToLower() == "sfw") purity = "100";
-            else if (Settings.Default.Purity.ToLower() == "sketchy") purity = "011";
-            else purity = "111";
+            else if (Settings.Default.Purity.ToLower() == "sketchy") purity = "010";
+            else if (Settings.Default.Purity.ToLower() == "sketchy") purity = "010";
+            else if (Settings.Default.Purity.ToLower() == "both") purity = "110";
+            else if (Settings.Default.Purity.ToLower() == "nsfw only") purity = "001";
             URL += "&purity=" + purity;
 
             // compute page size
@@ -46,6 +48,13 @@ namespace WallpaperChanger.Utils
                 Settings.Default.Save();
                 URL += "&page=" + Settings.Default.CurrentPageNo;
             }
+
+            // API key
+            if (Settings.Default.ApiKey.IsNotEmpty())
+            {
+                URL += "&apikey=" + Settings.Default.ApiKey;
+            }
+
             return URL;
         }
 
@@ -129,6 +138,58 @@ namespace WallpaperChanger.Utils
         }
 
         #endregion
+        public void ApplyWallpaper(WallpaperInfo wi)
+        {
+            // download wallpaper
+            string new_wallpaper = DownloadWallpaper(wi);
+
+            #region wallpaper clean up (delete old wallpaper, rename current wallpaper and set as a wallpaper)
+
+            // delete old wallpaper (if found)
+            string[] old_wallpapers = Directory.GetFiles(GetCurrentFolder(), "wallpaper_*");
+            foreach (string old_wallpaper in old_wallpapers)
+            {
+                File.Delete(old_wallpaper);
+            }
+
+            // rename new/downloaded wallpaper
+            string new_wallpaper_name = $"wallpaper_{DateTime.Now.Ticks.ToString()}{Path.GetExtension(new_wallpaper)}";
+            new FileInfo(new_wallpaper).MoveTo(new_wallpaper_name);
+
+            new_wallpaper = new_wallpaper_name;
+
+            #endregion
+
+            // change wallpaper
+
+            // following line of code (approach) does change walllpaper but when we switch between virtual desktops
+            // it shows a solid background color for a moment, and then wallpaper appears up
+            // everything's fast but the overall experience is weird...
+            //WallpaperChangerUtil.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
+
+            // so instead, let's se external (and functional solution for it)
+
+            WallpaperChangerByExe.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
+
+            #region add wallpaper to history
+            if (Settings.Default.WallpaperHistory.IsNotEmpty())
+            {
+                List<string> id_list = Settings.Default.WallpaperHistory.Split(',').ToList();
+                if (id_list.Count >= 250)
+                {
+                    id_list.RemoveAt(0);
+                }
+
+                id_list.Add(wi.URL.GetFileName());
+                Settings.Default.WallpaperHistory = string.Join(",", id_list);
+            }
+            else
+            {
+                Settings.Default.WallpaperHistory += wi.URL.GetFileName();
+            }
+            Settings.Default.Save();
+            #endregion
+        }
 
         public void ApplyNextWallpaper()
         {
@@ -173,71 +234,7 @@ namespace WallpaperChanger.Utils
 
             #endregion
 
-            // download wallpaper
-            string new_wallpaper = DownloadWallpaper(next_wallpaper);
-
-            #region wallpaper clean up (delete old wallpaper, rename current wallpaper and set as a wallpaper)
-
-            // delete old wallpaper (if found)
-            string[] old_wallpapers = Directory.GetFiles(GetCurrentFolder(), "wallpaper_*");
-            foreach (string old_wallpaper in old_wallpapers)
-            {
-                File.Delete(old_wallpaper);
-            }
-
-            // rename new/downloaded wallpaper
-            string new_wallpaper_name = $"wallpaper_{DateTime.Now.Ticks.ToString()}{Path.GetExtension(new_wallpaper)}";
-            new FileInfo(new_wallpaper).MoveTo(new_wallpaper_name);
-
-            new_wallpaper = new_wallpaper_name;
-
-            #endregion
-
-            // change wallpaper
-
-            // following line of code (approach) does change walllpaper but when we switch between virtual desktops
-            // it shows a solid background color for a moment, and then wallpaper appears up
-            // everything's fast but the overall experience is weird...
-            //WallpaperChangerUtil.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
-
-            // so instead, let's se external (and functional solution for it)
-
-            WallpaperChangerByExe.ChangeWallpaper(GetCurrentFolder() + "\\" + new_wallpaper);
-
-            //foreach (var resourceName in arrResources)
-            //{
-            //    if (resourceName.ToUpper().EndsWith("VirtualDesktop11.exe".ToUpper()))
-            //    {
-            //        using (var resourceToSave = currentAssembly.GetManifestResourceStream(resourceName))
-            //        {
-            //            using (var output = File.OpenWrite(GetCurrentFolder()))
-            //            {
-            //                resourceToSave.CopyTo(output);
-            //            }
-            //            resourceToSave.Close();
-            //        }
-            //    }
-            //}
-
-
-            #region add wallpaper to history
-            if (Settings.Default.WallpaperHistory.IsNotEmpty())
-            {
-                List<string> id_list = Settings.Default.WallpaperHistory.Split(',').ToList();
-                if (id_list.Count >= 250)
-                {
-                    id_list.RemoveAt(0);
-                }
-
-                id_list.Add(next_wallpaper.URL.GetFileName());
-                Settings.Default.WallpaperHistory = string.Join(",", id_list);
-            }
-            else
-            {
-                Settings.Default.WallpaperHistory += next_wallpaper.URL.GetFileName();
-            }
-            Settings.Default.Save();
-            #endregion
+            ApplyWallpaper(next_wallpaper);
         }
 
         // following function is only for debugging purposes for debug form
