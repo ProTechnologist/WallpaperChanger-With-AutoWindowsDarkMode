@@ -41,13 +41,15 @@ namespace WallpaperChanger.Utils
             else if (Settings.Default.Purity.ToLower() == "nsfw only") purity = "001";
             URL += "&purity=" + purity;
 
-            // compute page size
-            if (Settings.Default.CurrentPageNo > 0 && Settings.Default.CurrentPageNo <= Settings.Default.MaxPageNo)
+            // verifying that the current page is properly set
+            if (Settings.Default.CurrentPageNo < 1)
             {
-                Settings.Default.CurrentPageNo = Settings.Default.CurrentPageNo + 1;
-                Settings.Default.Save();
-                URL += "&page=" + Settings.Default.CurrentPageNo;
+                Settings.Default.CurrentPageNo = 1;
             }
+
+            // add page size to the URL
+            URL += "&page=" + Settings.Default.CurrentPageNo;
+
 
             // API key
             if (Settings.Default.ApiKey.IsNotEmpty())
@@ -72,35 +74,38 @@ namespace WallpaperChanger.Utils
 
         public void UpdateWallpaperList()
         {
-            // fetching fresh list of wallpapers
-            string api_url = GetUrl();
-            HttpClient Client = new HttpClient();
-            HttpResponseMessage response = Client.GetAsync(api_url).GetAwaiter().GetResult();
-
-            if (response.IsSuccessStatusCode)
+            Task.Run(() =>
             {
-                string json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                WallhavenResponse list = JsonConvert.DeserializeObject<WallhavenResponse>(json);
+                // fetching fresh list of wallpapers
+                string api_url = GetUrl();
+                HttpClient Client = new HttpClient();
+                HttpResponseMessage response = Client.GetAsync(api_url).GetAwaiter().GetResult();
 
-                // update page index
-                Settings.Default.CurrentPageNo = list.meta.current_page;
-                Settings.Default.MaxPageNo = list.meta.total;
-                Settings.Default.Seed = list.meta.seed == null ? string.Empty : list.meta.seed.ToString();
-                Settings.Default.Save();
-
-                // update wallpaper collection
-                Wallpapers.Clear();
-
-                foreach (WallpaperData wallpaper in list.data)
+                if (response.IsSuccessStatusCode)
                 {
-                    WallpaperInfo wi = new WallpaperInfo();
-                    wi.URL = wallpaper.url;
-                    wi.Path = wallpaper.path;
-                    wi.Thumbnail = wallpaper.thumbs.large;
+                    string json = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    WallhavenResponse list = JsonConvert.DeserializeObject<WallhavenResponse>(json);
 
-                    Wallpapers.Add(wi);
+                    // update page index
+                    Settings.Default.CurrentPageNo = list.meta.current_page;
+                    Settings.Default.MaxPageNo = list.meta.total;
+                    Settings.Default.Seed = list.meta.seed == null ? string.Empty : list.meta.seed.ToString();
+                    Settings.Default.Save();
+
+                    // update wallpaper collection
+                    Wallpapers.Clear();
+
+                    foreach (WallpaperData wallpaper in list.data)
+                    {
+                        WallpaperInfo wi = new WallpaperInfo();
+                        wi.URL = wallpaper.url;
+                        wi.Path = wallpaper.path;
+                        wi.Thumbnail = wallpaper.thumbs.large;
+
+                        Wallpapers.Add(wi);
+                    }
                 }
-            }
+            }).Wait();
         }
 
         WallpaperInfo ComputeRandomWallpaperURL()
@@ -195,6 +200,17 @@ namespace WallpaperChanger.Utils
         {
             if (Wallpapers.Count == 0)
             {
+                // increase page counter and then load up the wallpapers
+                if (Settings.Default.CurrentPageNo == 0 || Settings.Default.CurrentPageNo == Settings.Default.MaxPageNo)
+                {
+                    Settings.Default.CurrentPageNo = 1;
+                }
+                else
+                {
+                    Settings.Default.CurrentPageNo++;
+                }
+
+                Settings.Default.Save();
                 UpdateWallpaperList();
             }
 

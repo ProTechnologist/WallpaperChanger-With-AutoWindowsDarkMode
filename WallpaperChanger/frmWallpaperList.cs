@@ -38,13 +38,13 @@ namespace WallpaperChanger
 
         private void frmWallpaperList_Load(object sender, EventArgs e)
         {
-            Refresh();
+            RefreshWallpapers();
         }
 
-        void Refresh()
+        void RefreshWallpapers()
         {
-            UpdatePageLabel();
             LoadPage(null);
+            UpdatePageLabel();
         }
 
         void UpdatePageLabel()
@@ -55,14 +55,12 @@ namespace WallpaperChanger
 
         void LoadPage(bool? isNextPage)
         {
-            flowLayoutPanel1.Controls.Clear();
-
             Task.Run(() =>
             {
                 if (isNextPage.HasValue)
                 {
                     if (isNextPage.Value) Settings.Default.CurrentPageNo++;
-                    if (isNextPage.Value) Settings.Default.CurrentPageNo--;
+                    if (!isNextPage.Value) Settings.Default.CurrentPageNo--;
 
                     if (Settings.Default.CurrentPageNo < 1) Settings.Default.CurrentPageNo = 1;
 
@@ -79,20 +77,28 @@ namespace WallpaperChanger
                     picture_box.SizeMode = PictureBoxSizeMode.AutoSize;
                     picture_box.Tag = wi;
 
+
+
                     picture_box.DoubleClick += (sender, e) =>
                     {
-                        WallpaperInfo current_wi = (sender as PictureBox).Tag as WallpaperInfo;
-                        if (current_wi != null)
+                        Task.Run(() =>
                         {
-                            WallpaperChanger.ApplyWallpaper(current_wi);
-                        }
+                            WallpaperInfo current_wi = (sender as PictureBox).Tag as WallpaperInfo;
+                            if (current_wi != null)
+                            {
+                                WallpaperChanger.ApplyWallpaper(current_wi);
+                            }
+                        });
                     };
 
                     boxes.Add(picture_box);
                 }
             }).Wait();
 
+            flowLayoutPanel1.SuspendLayout();
+            flowLayoutPanel1.Controls.Clear();
             flowLayoutPanel1.Controls.AddRange(boxes.ToArray());
+            flowLayoutPanel1.ResumeLayout();
         }
 
         private void btnPrevPage_Click(object sender, EventArgs e)

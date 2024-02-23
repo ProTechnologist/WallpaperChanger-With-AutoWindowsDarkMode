@@ -52,7 +52,7 @@ namespace WallpaperChanger
         {
             setDefaultUIOptions();
             RestoreSettings();
-
+            ConfigureSaveButtonTimer();
         }
 
         void OpenConfigWindow()
@@ -126,10 +126,8 @@ namespace WallpaperChanger
 
         #endregion
 
-        private void btnSaveChanges_Click(object sender, EventArgs e)
+        void ConfigureSaveButtonTimer()
         {
-            #region configure timer
-
             timer.Interval = 500;
 
             timer.Tick += (sender, e) =>
@@ -138,15 +136,17 @@ namespace WallpaperChanger
                 Thread.Sleep(500);
                 btnSaveChanges.Text = "Save Changes";
                 btnSaveChanges.Enabled = true;
+
+                timer.Stop();
             };
+        }
 
-            #endregion
-
+        private void btnSaveChanges_Click(object sender, EventArgs e)
+        {
             btnSaveChanges.Enabled = false;
-            btnSaveChanges.Text = "Saving ...";
+            btnSaveChanges.Text = "Saved!";
 
             timer.Start();
-
             SaveChanges();
         }
 
