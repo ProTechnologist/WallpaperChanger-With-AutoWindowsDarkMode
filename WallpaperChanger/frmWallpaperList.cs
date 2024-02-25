@@ -113,14 +113,9 @@ namespace WallpaperChanger
             UpdatePageLabel();
         }
 
-        private void lblPageInfo_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            Refresh();
+            RefreshWallpapers();
         }
     }
 }

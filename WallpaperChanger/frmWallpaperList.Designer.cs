@@ -41,10 +41,10 @@
             // 
             flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             flowLayoutPanel1.AutoScroll = true;
-            flowLayoutPanel1.Location = new Point(0, 53);
+            flowLayoutPanel1.Location = new Point(0, 46);
             flowLayoutPanel1.Margin = new Padding(3, 4, 3, 4);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(1334, 658);
+            flowLayoutPanel1.Size = new Size(1334, 665);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // btnNextPage
@@ -52,7 +52,7 @@
             btnNextPage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnNextPage.Location = new Point(1237, 12);
             btnNextPage.Name = "btnNextPage";
-            btnNextPage.Size = new Size(93, 34);
+            btnNextPage.Size = new Size(93, 27);
             btnNextPage.TabIndex = 13;
             btnNextPage.Text = "Next Page";
             btnNextPage.UseVisualStyleBackColor = true;
@@ -63,7 +63,7 @@
             btnPrevPage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnPrevPage.Location = new Point(1040, 12);
             btnPrevPage.Name = "btnPrevPage";
-            btnPrevPage.Size = new Size(93, 34);
+            btnPrevPage.Size = new Size(93, 27);
             btnPrevPage.TabIndex = 14;
             btnPrevPage.Text = "Prev Page";
             btnPrevPage.UseVisualStyleBackColor = true;
@@ -73,19 +73,18 @@
             // 
             lblPageInfo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblPageInfo.AutoSize = true;
-            lblPageInfo.Location = new Point(1138, 19);
+            lblPageInfo.Location = new Point(1139, 15);
             lblPageInfo.Name = "lblPageInfo";
             lblPageInfo.Size = new Size(91, 20);
             lblPageInfo.TabIndex = 15;
             lblPageInfo.Text = "<Page Info>";
-            lblPageInfo.Click += lblPageInfo_Click;
             // 
             // btnRefresh
             // 
             btnRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnRefresh.Location = new Point(941, 12);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(93, 34);
+            btnRefresh.Size = new Size(93, 27);
             btnRefresh.TabIndex = 16;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
