@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Data;
+using System.Diagnostics;
 using WallpaperChanger.Utils;
 
 namespace WallpaperChanger
@@ -51,19 +52,29 @@ namespace WallpaperChanger
                 {
                     PictureBox picture_box = new PictureBox();
                     picture_box.ImageLocation = $"https://th.wallhaven.cc/small/{id.Substring(0, 2)}/{id}.jpg";
-                    picture_box.Width = 300;
-                    picture_box.Height = 200;
+                    //picture_box.Width = 300;
+                    //picture_box.Height = 200;
                     picture_box.SizeMode = PictureBoxSizeMode.AutoSize;
                     picture_box.Tag = $"https://wallhaven.cc/w/{id}";
 
                     picture_box.DoubleClick += (sender, e) =>
                     {
                         string url = (sender as PictureBox).Tag.ToString();
+                        string id = Path.GetFileName(url);
 
-                        Process.Start(new ProcessStartInfo()
+                        #region open wallpaper in the browse (removing this feature in favor of setting image as wallpaper)
+                        //Process.Start(new ProcessStartInfo()
+                        //{
+                        //    UseShellExecute = true,
+                        //    FileName = url
+                        //});
+                        #endregion
+
+                        // set image as wallpaper
+                        new WallhavenAutoWallpaperChanger().ApplyWallpaper(new WallpaperInfo()
                         {
-                            UseShellExecute = true,
-                            FileName = url
+                            URL = url,
+                            Path = @$"https://w.wallhaven.cc/full/{ id.Substring(0,2) }/wallhaven-{id}.jpg"
                         });
                     };
 

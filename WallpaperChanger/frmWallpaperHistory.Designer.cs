@@ -75,9 +75,9 @@
             label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
             label1.Location = new Point(261, 29);
             label1.Name = "label1";
-            label1.Size = new Size(446, 25);
+            label1.Size = new Size(298, 25);
             label1.TabIndex = 11;
-            label1.Text = "Double Click on wallpaper to go website and save it";
+            label1.Text = "Double Click to change Wallpaper";
             // 
             // button1
             // 
