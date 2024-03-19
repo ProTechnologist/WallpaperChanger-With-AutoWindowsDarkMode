@@ -179,7 +179,7 @@ namespace WallpaperChanger.Utils
             #region add wallpaper to history
             if (Settings.Default.WallpaperHistory.IsNotEmpty())
             {
-                List<string> id_list = Settings.Default.WallpaperHistory.Split(',').ToList();
+                List<string> id_list = Settings.Default.WallpaperHistory.Split(',').Distinct().ToList();
                 if (id_list.Count >= 250)
                 {
                     id_list.RemoveAt(0);
