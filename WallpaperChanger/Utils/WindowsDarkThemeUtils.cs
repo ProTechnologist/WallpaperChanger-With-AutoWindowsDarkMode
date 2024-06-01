@@ -72,6 +72,9 @@ namespace WallpaperChanger.Utils
             Task.Run(() =>
             {
                 #region validation
+
+                if (!Settings.Default.AutoThemeChange) return;
+
                 if (!Settings.Default.LightModeStartsAt.IsNotEmpty() && !Settings.Default.DarkModeStartsAt.IsNotEmpty()) return;
                 #endregion
 
