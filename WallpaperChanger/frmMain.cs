@@ -26,9 +26,24 @@ namespace WallpaperChanger
             StartWallpaperTimer();
             StartWindowThemeTimer();
 
+            ToggleAutoWindowThemeChangePause();
+
             // uncomment following line of code only for debugging purposes
             //new frmDebugForm().Show();
             //new frmTestForm().Show();
+        }
+
+        private void ToggleAutoWindowThemeChangePause()
+        {
+            // change taskbar icon context menu settting
+            if (Settings.Default.AutoThemeChange)
+            {
+                toggleWindowThemeMenuItem.Text = "Toggle Window Theme";
+            }
+            else
+            {
+                toggleWindowThemeMenuItem.Text = "Resume Auto Window Theme Change";
+            }
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -191,7 +206,15 @@ namespace WallpaperChanger
             Task.Run(() =>
             {
                 windowDarkModeManager.ToggleWindowAppTheme();
-            });
+            }).ConfigureAwait(false);
+
+            // disable auto window theme change as user has changed the settings
+            // this will help stop app to change theme automatically.
+            Settings.Default.AutoThemeChange = !Settings.Default.AutoThemeChange;
+            Settings.Default.Save();
+
+            // update UI
+            ToggleAutoWindowThemeChangePause();
         }
 
         private void wallpaperListToolStripMenuItem_Click(object sender, EventArgs e)

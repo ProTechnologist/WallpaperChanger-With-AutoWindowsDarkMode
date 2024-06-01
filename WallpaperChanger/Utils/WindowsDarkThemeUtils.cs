@@ -71,7 +71,6 @@ namespace WallpaperChanger.Utils
         {
             Task.Run(() =>
             {
-
                 #region validation
                 if (!Settings.Default.LightModeStartsAt.IsNotEmpty() && !Settings.Default.DarkModeStartsAt.IsNotEmpty()) return;
                 #endregion
@@ -94,6 +93,17 @@ namespace WallpaperChanger.Utils
                     EnableWindowAppTheme(false);
                 }
             });
+        }
+
+        public bool IsAutoThemeChangedEnable()
+        {
+            return Settings.Default.AutoThemeChange;
+        }
+
+        public void ToggleAutoThemeChange()
+        {
+            Settings.Default.AutoThemeChange = !Settings.Default.AutoThemeChange;
+            Settings.Default.Save();
         }
 
         void SendTimeooutMsgToWindows()
